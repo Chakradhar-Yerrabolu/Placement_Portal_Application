@@ -1,10 +1,6 @@
-# Placement Portal — PythonAnywhere deployment
+# Placement Portal 
 
-## Included improvements
-- Responsive UI polish: improved spacing, cards, form controls, focus states, mobile layouts and reduced-motion support.
-- PythonAnywhere-friendly SQLite location (`app/instance/site.db`) so the database path is predictable.
-- Missing Flask-SQLAlchemy/SQLAlchemy dependencies added to `requirements.txt`.
-- Secret key can be configured using an environment variable.
+
 
 ## Run locally
 ```bash
@@ -14,35 +10,6 @@ python -m venv .venv
 python -m pip install -r requirements.txt
 python run.py
 ```
-
-## Deploy on PythonAnywhere (WSGI, beginner-friendly)
-1. Upload this ZIP to your PythonAnywhere account and extract it in your home directory, for example `~/placement_portal`.
-2. Open a Bash console and create a virtual environment (choose a Python version available on your account):
-   ```bash
-   cd ~/placement_portal
-   python3.11 -m venv ~/.virtualenvs/placement-portal
-   source ~/.virtualenvs/placement-portal/bin/activate
-   pip install --upgrade pip
-   pip install -r requirements.txt
-   ```
-3. In **Web** tab, create a new **Manual configuration** web app using the same Python version. Set the virtualenv path to `/home/YOUR_USERNAME/.virtualenvs/placement-portal`.
-4. Open the WSGI configuration file linked in the Web tab and replace its application section with the following, changing `YOUR_USERNAME` and the project folder if needed:
-   ```python
-   import os, sys
-   project_home = '/home/YOUR_USERNAME/placement_portal'
-   if project_home not in sys.path:
-       sys.path.insert(0, project_home)
-   os.environ['SECRET_KEY'] = 'PASTE-A-LONG-RANDOM-SECRET-HERE'
-   from run import app as application
-   ```
-5. In the Web tab, set the static files mapping: URL `/static/` → directory `/home/YOUR_USERNAME/placement_portal/app/static/`.
-6. Click **Reload**. Visit the web app URL. If it fails, inspect the error log link on the Web tab.
-
-## Important before public launch
-- Change the secret key in the WSGI file to a long random value. Do not commit it to a public repository.
-- The current project contains legacy authentication patterns (including plain-text password comparisons and a hardcoded admin secret in `app/auth.py`). This package does not silently change those flows because doing so could break existing pages. **Do not use real passwords or sensitive personal data until authentication is hardened** (password hashing, CSRF protection, rate limiting, and removing the hardcoded admin secret).
-- PythonAnywhere's free plan and account features can change; check the current Web tab options for your account.
-- SQLite is suitable for a small demo. Keep a backup of `app/instance/site.db`; avoid concurrent heavy writes.
 
 ## Troubleshooting
 - `ModuleNotFoundError`: ensure the Web tab points to the virtualenv above and all requirements installed inside it.
@@ -196,7 +163,3 @@ After creating migrations, keep the `migrations/` folder with your project for f
 - Test registration, confirmation emails, student/company/admin login, job creation, applications, and reports against the new database before announcing the site.
 - Take backups/export important records before changing database providers. Check your Neon plan's retention and compute/suspend behavior.
 - Flask-Migrate is included for schema migrations. Do not treat `db.create_all()` as a replacement for migrations.
-
-### PythonAnywhere upload checklist
-
-Upload/extract the **entire ZIP project** (all files and folders, preserving the `app/templates/`, `app/static/`, and `app/templates/emails/` paths). Do not upload only `example.env` or only the HTML template. You need `run.py`, `requirements.txt`, the whole `app/` folder, and `README.md`. `example.env` is a reference template; for PythonAnywhere, set actual values in the WSGI environment. Do not upload a populated `.env` to a public repository.
