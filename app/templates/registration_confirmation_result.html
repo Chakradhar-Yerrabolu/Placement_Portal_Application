@@ -1,0 +1,10 @@
+{% extends "base.html" %}
+{% block title %}Registration Confirmation - Placement Portal{% endblock %}
+{% block content %}
+<div class="form-container" style="max-width:680px;text-align:center;margin:3rem auto;">
+  <div style="font-size:3rem;margin-bottom:1rem;" aria-hidden="true">{{ '✓' if success else '!' }}</div>
+  <h1>{{ 'Email confirmed' if success else 'Confirmation unsuccessful' }}</h1>
+  <p>{{ message }}</p>
+  {% if success %}<a class="role-button accent-btn" href="{{ url_for('student_login') }}">Go to student login</a>{% else %}<a class="role-button accent-btn" href="{{ url_for('student_register') }}">Return to registration</a>{% endif %}
+</div>
+{% endblock %}

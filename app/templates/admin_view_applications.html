@@ -1,0 +1,93 @@
+{% extends "base.html" %}
+
+{% block title %}Admin – Company Job Posts{% endblock %}
+
+{% block content %}
+<div class="admin-container">
+
+    <h2 class="page-title">Company Job Posts</h2>
+    <p class="page-subtitle">
+        Review, approve, or restrict job posts created by companies.
+    </p>
+
+    <div class="table-container">
+        <table class="admin-table">
+            <thead>
+                <tr>
+                    <th>Company</th>
+                    <th>Job Title</th>
+                    <th>Deadline</th>
+                    <th>Status</th>
+                    <th>Approve</th>
+                    <th>Disallow</th>
+                    <th>Block Company</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for post in posts %}
+                <tr class="{% if post.Company.Company_blocked %}blocked-row{% endif %}">
+                    <td>{{ post.Company.Company_name }}</td>
+
+                    <td>
+                        <strong>{{ post.Job_title }}</strong>
+                    </td>
+
+                    <td>{{ post.Application_deadline }}</td>
+
+                    <td>
+                        {% if post.Admin_approved %}
+                            <span class="status active">Approved</span>
+                        {% else %}
+                            <span class="status pending">Pending</span>
+                        {% endif %}
+                    </td>
+
+                    <!-- Approve -->
+                    <td>
+                        {% if not post.Admin_approved %}
+                            <a href="{{ url_for('admin_approve_post', pid=post.Post_id) }}"
+                               class="action-btn approve">
+                                ✔ Allow
+                            </a>
+                        {% else %}
+                            <span class="muted-text">—</span>
+                        {% endif %}
+                    </td>
+
+                    <!-- Disallow -->
+                    <td>
+                        {% if post.Admin_approved %}
+                            <a href="{{ url_for('admin_disallow_post', pid=post.Post_id) }}"
+                               class="action-btn disallow">
+                                ✖ Disallow
+                            </a>
+                        {% else %}
+                            <span class="muted-text">—</span>
+                        {% endif %}
+                    </td>
+
+                    <!-- Block Company -->
+                    <td>
+                        {% if post.Company.Company_blocked %}
+                            <span class="status blocked">Blocked</span>
+                        {% else %}
+                            <a href="{{ url_for('admin_block_company', cid=post.Company.Company_id) }}"
+                               class="action-btn block">
+                                🚫 Block
+                            </a>
+                        {% endif %}
+                    </td>
+                </tr>
+                {% else %}
+                <tr>
+                    <td colspan="7" class="empty-row">
+                        No company posts found
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+</div>
+{% endblock %}

@@ -1,0 +1,66 @@
+{% extends "base.html" %}
+
+{% block title %}Admin – Company Post Details{% endblock %}
+
+{% block content %}
+<div class="admin-container">
+
+    <h2>Company Post Details</h2>
+
+    <div class="info-card">
+        <p><strong>Company:</strong> {{ post.Company.Company_name }}</p>
+        <p><strong>Job Title:</strong> {{ post.Job_title }}</p>
+        <p><strong>Description:</strong> {{ post.Job_description }}</p>
+        <p><strong>Deadline:</strong> {{ post.Application_deadline }}</p>
+        <p><strong>Vacancies:</strong> {{ post.Vacancies }}</p>
+        <p><strong>Salary:</strong> {{ post.Salary }}</p>
+        <p><strong>Status:</strong>
+            {% if post.Admin_approved %}
+                Approved
+            {% else %}
+                Pending
+            {% endif %}
+        </p>
+    </div>
+
+    <h3>Student Applications</h3>
+
+    <div class="table-container">
+        <table class="admin-table">
+            <thead>
+                <tr>
+                    <th>Student ID</th>
+                    <th>Name</th>
+                    <th>Email</th>
+                    <th>Branch</th>
+                    <th>CGPA</th>
+                    <th>Status</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for app in applications %}
+                <tr>
+                    <td>{{ app.Student.Student_id }}</td>
+                    <td>{{ app.Student.Student_name }}</td>
+                    <td>{{ app.Student.Student_email }}</td>
+                    <td>{{ app.Student.Student_branch }}</td>
+                    <td>{{ app.Student.Student_CGPA }} ({{ app.Student.Student_CGPA_Scale }})</td>
+                    <td>{{ app.Application_status }}</td>
+                </tr>
+                {% else %}
+                <tr>
+                    <td colspan="6" style="text-align:center;">
+                        No students have applied yet
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+    <p style="margin-top:20px;">
+        <a href="{{ url_for('admin_view_applications') }}">← Back to Company Posts</a>
+    </p>
+
+</div>
+{% endblock %}

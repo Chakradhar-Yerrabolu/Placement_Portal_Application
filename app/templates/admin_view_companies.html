@@ -1,0 +1,94 @@
+{% extends "base.html" %}
+
+
+
+{% block title %}
+View Companies
+{% endblock %}
+
+{% block content %}
+<div class="admin-companies-container">
+
+    <h2>Companies List</h2>
+
+    <!-- Search -->
+    <form method="GET" class="company-search-form">
+        <input
+            type="text"
+            name="q"
+            placeholder="Search by Company Name / Email / ID"
+            value="{{ query }}"
+        >
+        <button type="submit">Search</button>
+    </form>
+
+    <!-- Table -->
+    <div class="table-wrapper">
+        <table class="admin-table">
+            <thead>
+                <tr>
+                    <th>CID</th>
+                    <th>Name</th>
+                    <th>Email</th>
+                    <th>Phone</th>
+                    <th>Website</th>
+                    <th>Hired</th>
+                    <th>Status</th>
+                    <th>Allow ?? </th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for company in companies %}
+                <tr class="{% if company.Company_blocked %}blocked-row{% endif %}">
+                    <td>{{ company.Company_id }}</td>
+                    <td>{{ company.Company_name }}</td>
+                    <td>
+                        <a href="mailto:{{ company.Company_email }}">
+                            {{ company.Company_email }}
+                        </a>
+                    </td>
+                    <td>{{ company.Company_phone }}</td>
+                    <td>
+                        <a href="{{ company.Company_website }}" target="_blank">
+                            Visit
+                        </a>
+                    </td>
+                    <td>{{ company.Company_no_of_students_hired }}</td>
+                    <td>
+                        {% if company.Company_blocked %}
+                            <span class="status blocked">Blocked</span>
+                        {% else %}
+                            <span class="status active">Active</span>
+                        {% endif %}
+                    </td>
+                    <td>
+                        {% if company.Company_approved %}
+                            <span class="status active">Already Allowed</span>
+                        {% else %}
+                            <a href="{{ url_for('admin_allow_company', cid=company.Company_id) }}">
+                                Allow
+                            </a>
+                        {% endif %}
+                    </td>
+                    <td>
+                        {% if company.Company_blocked %}
+                            <a href="{{ url_for('admin_unblock_company', cid=company.Company_id) }}"
+                               class="action-btn unblock">Unblock</a>
+                        {% else %}
+                            <a href="{{ url_for('admin_block_company', cid=company.Company_id) }}"
+                               class="action-btn block">Block</a>
+                        {% endif %}
+                    </td>
+                </tr>
+                {% else %}
+                <tr>
+                    <td colspan="8" style="text-align:center;">No companies found</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+</div>
+{% endblock %}

@@ -1,0 +1,95 @@
+{% extends "base.html" %}
+
+{% block title %}
+Admin Dashboard
+{% endblock %}
+
+{% block content %}
+<div class="dashboard-container">
+
+    <!-- Header -->
+    <h1 class="dashboard-title">
+        Welcome back, <span class="highlight">{{ admin_name }}</span>!
+    </h1>
+    <p class="dashboard-subtitle">
+        Here is an overview of the placement portal status.
+    </p>
+
+    <!-- Stat Cards -->
+    <div class="stats-grid">
+        <div class="stat-card">
+            <h4>Total Students</h4>
+            <p class="stat-number">{{ students|length }}</p>
+        </div>
+        <div class="stat-card">
+            <h4>Companies</h4>
+            <p class="stat-number">{{ companies|length }}</p>
+        </div>
+        <div class="stat-card">
+            <h4>Active Jobs</h4>
+            <p class="stat-number">{{ students|sum(attribute='Student_offers') }}</p>
+        </div>
+        <div class="stat-card">
+            <h4>Placed Students</h4>
+            <p class="stat-number">
+            {{ students | selectattr('Student_placed', 'equalto', True) | list | length }}
+            </p>
+        </div>
+    </div>
+
+    <!-- Main Section -->
+    <div class="dashboard-main">
+
+        <!-- Table -->
+        <div class="dashboard-table">
+            <h3>Recent Job Listings</h3>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Company</th>
+                        <th>Role</th>
+                        <th>Posted On</th>
+                        <th>Status</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>TechCorp</td>
+                        <td>Software Engineer</td>
+                        <td>Jan 12, 2026</td>
+                        <td><span class="badge pending">Active</span></td>
+                    </tr>
+                    <tr>
+                        <td>DataSystems</td>
+                        <td>Data Analyst</td>
+                        <td>Jan 08, 2026</td>
+                        <td><span class="badge interviewing">Closed</span></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <!-- Quick Actions -->
+        <div class="quick-actions">
+            <h3>Quick Actions</h3>
+            <ul>
+                <li> 
+                   <a href="{{ url_for('admin_view_students') }}">👨‍🎓 View Students</a></li>
+                <li > <a href="{{ url_for('admin_view_companies') }}"> 🏢 Manage Companies</a></li>
+                <li > <a href="{{ url_for('admin_view_applications') }}"> 📄 View Applications</a></li>
+                <li>
+                    <a href="{{ url_for('admin_view_messages') }}">
+                        📩 View Messages
+                    </a>
+                </li>
+
+                <li class="logout-item">
+                    <a href="{{ url_for('admin_logout') }}">🚪 Logout</a>
+                </li>
+            </ul>
+        </div>
+
+    </div>
+
+</div>
+{% endblock %}

@@ -1,0 +1,66 @@
+{% extends "base.html" %}
+
+{% block title %}Contact Admin - Placement Portal{% endblock %}
+
+{% block content %}
+<div class="contact-wrapper">
+    <div class="contact-header">
+        <h1>Contact Administration</h1>
+        <p>Have a query or facing an issue? Send us a message and we'll get back to you shortly.</p>
+    </div>
+
+    <div class="contact-grid">
+        <div class="contact-form-card">
+            <form action="{{ url_for('contact_admin') }}" method="POST">
+                <div class="form-group">
+                    <label for="name">Your Name</label>
+                    <input type="text" id="name" name="name" placeholder="Enter your full name" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="email">Email Address</label>
+                    <input type="email" id="email" name="email" placeholder="Enter your registered email" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="subject">Subject</label>
+                    <select id="subject" name="subject" required>
+                        <option value="" disabled selected>Select a category</option>
+                        <option value="Technical Issue">Technical Issue</option>
+                        <option value="Placement Query">Placement Query</option>
+                        <option value="Profile Correction">Profile Correction</option>
+                        <option value="Other">Other</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="message">Message</label>
+                    <textarea id="message" name="message" rows="5" placeholder="How can we help you?" required></textarea>
+                </div>
+
+                <button type="submit" class="role-button">Send Message</button>
+            </form>
+        </div>
+
+        <div class="contact-info-card">
+            <h3>Office Information</h3>
+            <div class="info-block">
+                <strong>📍 Address</strong>
+                <p>Training & Placement Cell, Main Building,<br>University Campus, 400001</p>
+            </div>
+            <div class="info-block">
+                <strong>📞 Phone</strong>
+                <p>+91 123-456-7890</p>
+            </div>
+            <div class="info-block">
+                <strong>✉️ Email</strong>
+                <p>admin@placementportal.com</p>
+            </div>
+            <div class="info-block">
+                <strong>⏰ Hours</strong>
+                <p>Mon - Fri: 9:00 AM - 5:00 PM</p>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

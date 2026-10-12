@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+
+{% block title %}
+Admin Login
+{% endblock %}
+
+{% block content %}
+<div class="admin-login-container">
+    <h2>Admin Login</h2>
+
+    <form method="POST" class="admin-login-form">
+        <label for="admin_name">Admin Name</label>
+        <input type="text" name="admin_name" id="admin_name" required>
+
+        <label for="secret_key">Secret Passkey</label>
+        <input type="password" name="secret_key" id="secret_key" required>
+
+        <button type="submit">Login</button>
+    </form>
+</div>
+{% endblock %}

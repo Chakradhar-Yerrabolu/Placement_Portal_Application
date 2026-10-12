@@ -1,0 +1,116 @@
+{% extends "base.html" %}
+
+{% block title %}Company Dashboard - Placement Portal{% endblock %}
+
+{% block content %}
+<div class="dashboard-header">
+    <h1>
+        Welcome, <span class="user-name">{{ company.Company_name }}</span>!
+    </h1>
+    <p>Manage your placement drives and track student applications.</p>
+</div>
+
+<!-- Stats -->
+<div class="dash-stats-grid">
+    <div class="dash-card">
+        <h3>Placement Drives</h3>
+        <p class="stat-value">{{ drives|length }}</p>
+    </div>
+
+    <div class="dash-card">
+        <h3>Students Hired</h3>
+        <p class="stat-value">{{ company.Company_no_of_students_hired }}</p>
+    </div>
+
+    <div class="dash-card">
+        <h3>Account Status</h3>
+        {% if company.Company_approved %}
+            <p class="stat-value">Approved</p>
+        {% else %}
+            <p class="stat-value">Pending</p>
+        {% endif %}
+    </div>
+
+    <div class="dash-card">
+        <h3>Contact Email</h3>
+        <p class="stat-value">{{ company.Company_email }}</p>
+    </div>
+</div>
+
+<!-- Main Content -->
+<div class="dash-main-content">
+
+    <!-- Drives -->
+    <div class="dash-section">
+        <h2>Your Placement Drives</h2>
+
+        <div class="table-container">
+            <table class="data-table">
+                <thead>
+                    <tr>
+                        <th>Job Title</th>
+                        <th>Deadline</th>
+                        <th>Status</th>
+                        <th>Applicants</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for drive in drives %}
+                    <tr>
+                        <td>{{ drive.Job_title }}</td>
+                        <td>{{ drive.Application_deadline }}</td>
+                        <td>
+                           
+                                {% if not drive.Admin_approved %}
+                                    <span class="status-badge pending">Pending Approval</span>
+                                {% else %}
+                                    <span class="status-badge accepted">Approved</span>
+                                {% endif %}
+                                {% if drive.Application_deadline < today %}
+                                    Closed
+                                {% endif %}
+
+                            
+                        </td>
+                        <td>
+                            <a href="{{ url_for('company_view_applications', pid=drive.Post_id) }}">
+                                View Applicants
+                            </a>
+                        </td>
+                    </tr>
+                    {% else %}
+                    <tr>
+                        <td colspan="4" style="text-align:center;">
+                            No placement drives created yet.
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <!-- Sidebar -->
+    <div class="dash-sidebar">
+        <h3>Quick Actions</h3>
+        <ul class="action-list">
+            <li>
+                <a href="{{ url_for('company_create_drive') }}">
+                    ➕ Create Placement Drive
+                </a>
+            </li>
+            <li>
+                <a href="#">
+                    🏢 View Company Profile
+                </a>
+            </li>
+            <li>
+                <a href="{{ url_for('company_logout') }}">
+                    🚪 Logout
+                </a>
+            </li>
+        </ul>
+    </div>
+
+</div>
+{% endblock %}

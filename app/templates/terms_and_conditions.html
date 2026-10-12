@@ -1,0 +1,38 @@
+{% extends "base.html" %}
+
+{% block title %}Terms & Conditions - Placement Portal{% endblock %}
+
+{% block content %}
+<div class="terms-container">
+    <div class="terms-card">
+        <header class="terms-header">
+            <h1>Terms and Conditions (T&C)</h1>
+            <p>Last Updated: January 2026</p>
+            <div class="header-line"></div>
+        </header>
+
+        <section class="terms-body">
+            <div class="terms-intro">
+                <p>By using the Placement Portal, all Students and Companies agree to abide by the following Code of Conduct. Failure to comply may result in account termination or legal action.</p>
+            </div>
+
+            <ol class="terms-list">
+                <li><strong>Professional Respect:</strong> All users must maintain professional respect toward participating companies and the institution.</li>
+                <li><strong>Intent to Hire/Work:</strong> Users should only register for job positions if they have a genuine willingness to fulfill the role requirements.</li>
+                <li><strong>Data Integrity:</strong> Any fake or fraudulent details discovered in a profile will lead to the immediate termination of the account from our platform.</li>
+                <li><strong>Violation Reporting:</strong> Any violation complained of by a company shall be investigated and treated by our dedicated support team.</li>
+                <li><strong>Disciplinary Action:</strong> Action will be taken according to the severity of the violation. This is not limited to account termination but may also include legal proceedings.</li>
+                <li><strong>Code of Conduct:</strong> Both companies and students are required to maintain a strictly professional code of conduct at all times during the recruitment process.</li>
+                <li><strong>Impartiality:</strong> Companies must conduct interviews for all shortlisted students with strict impartiality and no partiality.</li>
+                <li><strong>Anti-Exploitation:</strong> No company shall demand any monetary amount from students under the guise of "fees." Such actions will lead to disciplinary measures and potential court fines.</li>
+                <li><strong>Anti-Bribery Policy:</strong> No student shall offer bribes, gifts, or any other form of illegal gratification to company recruiters.</li>
+                <li><strong>Report Threshold:</strong> A student is permitted a maximum of 3 reports from 3 different companies. If the report count exceeds this threshold, the student's account will be terminated immediately.</li>
+            </ol>
+        </section>
+
+        <footer class="terms-footer">
+            <a href="{{ url_for('home') }}" class="role-button">I Understand & Accept</a>
+        </footer>
+    </div>
+</div>
+{% endblock %}

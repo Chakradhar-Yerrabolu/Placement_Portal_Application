@@ -1,0 +1,46 @@
+{% extends "base.html" %}
+
+{% block title %}Company Portal - Placement Portal{% endblock %}
+
+{% block content %}
+<section class="hero-section">
+    <h1>Company Portal</h1>
+    <p class="hero-subtitle">
+        Partner with us to recruit top talent. Create placement drives, review applications, and manage hiring.
+    </p>
+</section>
+
+<div class="role-selection-container">
+    <div class="role-grid"> 
+        <div class="role-card">
+            <div class="role-icon">🔑</div>
+            <h3>Already Registered?</h3>
+            <p>
+                Log in to manage your company profile, create placement drives,
+                and track student applications.
+            </p>
+            <a href="{{ url_for('company_login') }}" class="role-button">
+                Login Now
+            </a>
+        </div>
+
+        <div class="role-card">
+            <div class="role-icon">🏢</div>
+            <h3>New Company?</h3>
+            <p>
+                Register your organization to participate in campus recruitment
+                after admin approval.
+            </p>
+            <a href="{{ url_for('company_register') }}" class="role-button accent-btn">
+                Register Company
+            </a>
+        </div>
+    </div>
+</div>
+
+<div style="text-align: center; margin-top: 40px;">
+    <a href="{{ url_for('home') }}" style="color: #666; text-decoration: none;">
+        ← Back to Role Selection
+    </a>
+</div>
+{% endblock %}

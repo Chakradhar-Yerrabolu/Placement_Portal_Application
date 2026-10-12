@@ -1,0 +1,101 @@
+{% extends "base.html" %}
+
+{% block title %}{{ post.Job_title }} - Placement Portal{% endblock %}
+
+{% block content %}
+<div class="job-details-container">
+
+    <!-- Header -->
+    <div class="job-header">
+        <h1>{{ post.Job_title }}</h1>
+        <p class="posted-by">
+            Posted by <strong>{{ post.Company.Company_name }}</strong>
+        </p>
+    </div>
+
+    <!-- Description -->
+    <div class="job-card">
+        <h3 class="section-title">Description</h3>
+        <p class="section-text">
+            {{ post.Job_description }}
+        </p>
+    </div>
+
+    <!-- Job Information -->
+    <div class="job-card">
+        <h3 class="section-title">Job Information</h3>
+
+        <div class="info-grid">
+            <div class="info-box">
+                <span>Salary / Stipend</span>
+                <strong>{{ post.Salary }}</strong>
+            </div>
+
+            <div class="info-box">
+                <span>Work Type</span>
+                <strong>{{ post.Work_type }}</strong>
+            </div>
+
+            <div class="info-box">
+                <span>Job Type</span>
+                <strong>{{ post.Job_type }}</strong>
+            </div>
+
+            <div class="info-box">
+                <span>Contract Period</span>
+                <strong>{{ post.Contract_period }}</strong>
+            </div>
+
+            <div class="info-box">
+                <span>Vacancies</span>
+                <strong>{{ post.Vacancies }}</strong>
+            </div>
+
+            <div class="info-box">
+                <span>Application Deadline</span>
+                <strong>{{ post.Application_deadline.strftime('%d %b %Y') }}</strong>
+            </div>
+        </div>
+    </div>
+
+    <!-- Eligibility -->
+    <div class="job-card">
+        <h3 class="section-title">Eligibility Criteria</h3>
+        <ul class="eligibility-list">
+            <li><strong>Branch:</strong> {{ post.Eligible_Branch }}</li>
+            <li><strong>Course:</strong> {{ post.Course }}</li>
+            <li><strong>Year:</strong> {{ post.Eligible_Year }}</li>
+        </ul>
+    </div>
+
+    <!-- Skills -->
+    <div class="job-card">
+        <h3 class="section-title">Skills Required</h3>
+        <p class="section-text">
+            {{ post.Skills_required }}
+        </p>
+    </div>
+
+    <!-- Responsibilities -->
+    <div class="job-card">
+        <h3 class="section-title">Role & Responsibilities</h3>
+        <p class="section-text">
+            {{ post.Responsibilities }}
+        </p>
+    </div>
+
+    <!-- Actions -->
+    <div class="job-actions">
+        <form method="POST" action="{{ url_for('student_apply_post', pid=post.Post_id) }}">
+            <button type="submit" class="apply-btn">
+                Apply for this Position
+            </button>
+        </form>
+
+        <a href="{{ url_for('student_view_posts') }}" class="back-link">
+            ← Back to Browse Jobs
+        </a>
+    </div>
+
+</div>
+{% endblock %}

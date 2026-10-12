@@ -1,0 +1,55 @@
+{% extends "base.html" %}
+
+{% block title %}Browse Jobs - Placement Portal{% endblock %}
+
+{% block content %}
+<div class="student-container">
+
+    <h2>Available Placement Drives</h2>
+    <p>All placement drives approved by admin and open for students.</p>
+
+    <div class="table-container">
+        <table class="data-table">
+    <thead>
+        <tr>
+            <th>Company</th>
+            <th>Job Title</th>
+            <th>Deadline</th>
+            <th>Status</th>
+            <th>Details</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for post in posts %}
+        <tr>
+            <td>{{ post.Company.Company_name }}</td>
+            <td>{{ post.Job_title }}</td>
+            <td>{{ post.Application_deadline.strftime('%d %b %Y') }}</td>
+
+            <td>
+                {% if post.Post_id in applied_post_ids %}
+                    <span class="status-badge accepted">Already Applied</span>
+                {% else %}
+                    <span class="status-badge pending">Not Applied</span>
+                {% endif %}
+            </td>
+
+            <td>
+                <a href="{{ url_for('student_view_post_details', pid=post.Post_id) }}">
+                    View Details
+                </a>
+            </td>
+        </tr>
+        {% else %}
+        <tr>
+            <td colspan="5" style="text-align:center;">
+                No approved jobs available
+            </td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+    </div>
+
+</div>
+{% endblock %}

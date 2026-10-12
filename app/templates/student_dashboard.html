@@ -1,0 +1,82 @@
+{% extends "base.html" %}
+
+{% block title %}Student Dashboard - Placement Portal{% endblock %}
+
+{% block content %}
+<div class="dashboard-header">
+    <h1>Welcome back, <span class="user-name">{{ User.Student_name }}</span>!</h1>
+    <p>Here is an overview of your placement progress.</p>
+</div>
+
+<div class="dash-stats-grid">
+    <div class="dash-card">
+        <h3>Applied Jobs</h3>
+        <p class="stat-value">{{ applications|length }}</p>
+    </div>
+    <div class="dash-card">
+        <h3>Interviews</h3>
+        <p class="stat-value">{{ User.Student_interviews }}</p>
+    </div>
+    <div class="dash-card">
+        <h3>Offers</h3>
+        <p class="stat-value">{{ User.Student_offers }}</p>
+    </div>
+    <div class="dash-card">
+        <h3>CGPA</h3>
+        <p class="stat-value">{{ User.Student_CGPA }} / {{ User.Student_CGPA_Scale }}</p>
+    </div>
+</div>
+
+<div class="dash-main-content">
+
+    <!-- Applied Applications -->
+    <div class="dash-section">
+        <h2>Your Applications</h2>
+
+        <div class="table-container">
+            <table class="data-table">
+                <thead>
+                    <tr>
+                        <th>Company</th>
+                        <th>Job Title</th>
+                        <th>Deadline </th>
+                        <th>Status</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for app in applications %}
+                    <tr>
+                        <td>{{ app.Post.Company.Company_name }}</td>
+                        <td>{{ app.Post.Job_title }}</td>
+                        <td>{{ app.Post.Application_deadline }}</td>
+                        <td>
+                            <span class="status-badge pending">
+                                {{ app.Application_status }}
+                            </span>
+                        </td>
+                    </tr>
+                    {% else %}
+                    <tr>
+                        <td colspan="4" style="text-align:center;">
+                            You haven’t applied to any jobs yet.
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <!-- Sidebar -->
+    <div class="dash-sidebar">
+        <h3>Quick Actions</h3>
+        <ul class="action-list">
+            <li><a href="{{ url_for('student_view_posts') }}">🔍 Browse Jobs</a></li>
+            <li><a href="{{ url_for('student_details', student_id=User.Student_id) }}">👤 View Profile</a></li>
+            <li><a href="{{ url_for('student_update_profile') }}">⚙️ Profile Settings</a></li>
+            <li><a href="{{ url_for('student_logout') }}">🚪 Logout</a></li>
+        </ul>
+    </div>
+
+</div>
+{% endblock %}

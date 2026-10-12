@@ -1,0 +1,39 @@
+{% extends "base.html" %}
+
+{% block title %}Home - Placement Portal{% endblock %}
+
+{% block content %}
+<section class="hero-section">
+    <h1>Welcome to the Placement Portal</h1>
+    <p class="hero-subtitle">Connecting talent with opportunity. Your gateway to exciting career opportunities.</p>
+</section>
+
+<div class="role-selection-container">
+    <h2>Choose Your Role to Get Started</h2>
+    <div class="role-grid"> 
+        <div class="role-card">
+            <div class="role-icon">🎓</div>
+            <h3>Student</h3>
+            <p>Apply for jobs, track applications, and manage your placement profile.</p>
+            <a href="{{ url_for('student_home') }}" class="role-button">Enter as Student</a>
+        </div>
+
+        <div class="role-card">
+            <div class="role-icon">🏢</div>
+            <h3>Company</h3>
+            <p>Post job openings, review student applications, and schedule interviews.</p>
+            <a href="{{ url_for('company_portal') }}" class="role-button">Enter as Company</a>
+        </div>
+
+        <div class="role-card">
+            <div class="role-icon">🛡️</div>
+            <h3>Admin</h3>
+            <p>Manage users, verify job listings, and generate placement reports.</p>
+            <a href="{{ url_for('admin_login') }}" class="role-button admin-btn">
+                Admin Portal
+            </a>
+
+        </div>
+    </div>
+</div>
+{% endblock %}

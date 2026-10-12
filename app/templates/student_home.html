@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+
+{% block title %}Student Portal - Placement Portal{% endblock %}
+
+{% block content %}
+<section class="hero-section">
+    <h1>Student Portal</h1>
+    <p class="hero-subtitle">Take the next step in your professional career. Access your dashboard to apply for jobs and track your progress.</p>
+</section>
+
+<div class="role-selection-container">
+    <div class="role-grid"> 
+        <div class="role-card">
+            <div class="role-icon">🔑</div>
+            <h3>Already a Member?</h3>
+            <p>Log in to access your profile, view job recommendations, and check interview schedules.</p>
+            <a href="{{ url_for('student_login') }}" class="role-button">Login Now</a>
+        </div>
+
+        <div class="role-card">
+            <div class="role-icon">📝</div>
+            <h3>New Here?</h3>
+            <p>Create your account to build your placement profile and start applying to top companies.</p>
+            <a href="{{ url_for('student_register') }}" class="role-button accent-btn">Create Account</a>
+        </div>
+    </div>
+</div>
+
+<div style="text-align: center; margin-top: 40px;">
+    <a href="{{ url_for('home') }}" style="color: #666; text-decoration: none;">← Back to Role Selection</a>
+</div>
+{% endblock %}

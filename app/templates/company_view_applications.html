@@ -1,0 +1,92 @@
+{% extends "base.html" %}
+
+{% block title %}Applicants - {{ post.Job_title }}{% endblock %}
+
+{% block content %}
+
+    <div class="page-header">
+        <h1 class="page-title">
+            Applicants for <span class="highlight">"{{ post.Job_title }}"</span>
+        </h1>
+
+        <p class="page-subtitle">
+            Review and manage student applications submitted for this position.
+        </p>
+
+        <div class="meta-row">
+            <span><strong>Company:</strong> {{ post.Company.Company_name }}</span>
+            <span><strong>Deadline:</strong> {{ post.Application_deadline.strftime('%d %b %Y') }}</span>
+            <span><strong>Vacancies:</strong> {{ post.Vacancies }}</span>
+            <span class="status-pill approved">Approved</span>
+        </div>
+    </div>
+
+
+    <!-- 🔍 Search Filters -->
+    <form method="GET" class="filter-form">
+
+        <input type="number" name="sid" placeholder="Student ID"
+               value="{{ request.args.get('sid', '') }}">
+
+        <input type="text" name="college" placeholder="College Name"
+               value="{{ request.args.get('college', '') }}">
+
+        <input type="number" step="0.01" name="min_cgpa" placeholder="Min CGPA"
+               value="{{ request.args.get('min_cgpa', '') }}">
+
+        <input type="number" step="0.01" name="max_cgpa" placeholder="Max CGPA"
+               value="{{ request.args.get('max_cgpa', '') }}">
+
+        <div class="filter-actions">
+            <button type="submit" class="primary-btn">Search</button>
+            <a href="{{ url_for('company_view_applications', pid=post.Post_id) }}" class="reset-btn">
+                Reset
+            </a>
+        </div>
+    </form>
+
+    <!-- Applications Table -->
+    <div class="table-container">
+        <table class="data-table">
+            <thead>
+                <tr>
+                    <th>Student ID</th>
+                    <th>Name</th>
+                    <th>Email</th>
+                    <th>Branch</th>
+                    <th>College</th>
+                    <th>CGPA</th>
+                    <th>Status</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for app in applications %}
+                <tr>
+                    <td>{{ app.Student.Student_id }}</td>
+                    <td>{{ app.Student.Student_name }}</td>
+                    <td>{{ app.Student.Student_email }}</td>
+                    <td>{{ app.Student.Student_branch }}</td>
+                    <td>{{ app.Student.Student_college }}</td>
+                    <td>
+                        {{ app.Student.Student_CGPA }}
+                        ({{ app.Student.Student_CGPA_Scale }})
+                    </td>
+                    <td>{{ app.Application_status }}</td>
+                </tr>
+                {% else %}
+                <tr>
+                    <td colspan="7" style="text-align:center;">
+                        No matching applications found
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    <br> <br>
+    <a href="{{ url_for('company_dashboard') }}" class="back-btn">
+        ← Back to Dashboard
+    </a>
+
+</div>
+{% endblock %}

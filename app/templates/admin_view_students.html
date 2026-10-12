@@ -1,0 +1,88 @@
+{% extends "base.html" %}
+
+{% block title %}
+View Students
+{% endblock %}
+
+{% block content %}
+<div class="admin-students-container">
+
+    <h2>Students List</h2>
+
+    <!-- Search Bar -->
+    <form method="GET" class="student-search-form">
+        <input
+            type="text"
+            name="q"
+            placeholder="Search by Roll No / Name / SID"
+            value="{{ query }}"
+        >
+        <button type="submit">Search</button>
+    </form>
+
+    <!-- Students Table -->
+    <div class="table-wrapper">
+        <table class="admin-table">
+            <thead>
+                <tr>
+                    <th>SID</th>
+                    <th>Roll No</th>
+                    <th>Name</th>
+                    <th>College</th>
+                    <th>NIRF Rank</th>
+                    <th>CGPA</th>
+                    <th>Contact</th>
+                    <th>Status</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for student in students %}
+                <tr class="{% if student.Student_blocked %}blocked-row{% endif %}">
+                    <td>{{ student.Student_id }}</td>
+                    <td>{{ student.Student_rollno }}</td>
+                    <td>{{ student.Student_name }}</td>
+                    <td>{{ student.Student_college }}</td>
+                    <td>{{ student.Student_clg_NIRF }}</td>
+                    <td>{{ student.Student_CGPA }}</td>
+                    <td>
+                            <div class="contact-container">
+                                <a href="https://mail.google.com/mail/?view=cm&fs=1&to={{ student.Student_email }}" 
+                                target="_blank" 
+                                class="email-link">
+                                Email
+                                </a>
+
+                                <span class="phone-text">{{ student.Student_phone }}</span>
+                            </div>
+                        </td>
+                    <td>
+                        {% if student.Student_blocked %}
+                            <span class="status blocked">Blocked</span>
+                        {% else %}
+                            <span class="status active">Active</span>
+                        {% endif %}
+                    </td>
+                    <td>
+                        {% if student.Student_blocked %}
+                            <a href="{{ url_for('admin_unblock_student', sid=student.Student_id) }}" class="action-btn unblock">
+                                Unblock
+                            </a>
+                        {% else %}
+                            <a href="{{ url_for('admin_block_student', sid=student.Student_id) }}" class="action-btn block">
+                                Block
+                            </a>
+                        {% endif %}
+                    </td>
+                </tr>
+                {% else %}
+                <tr>
+                    <td colspan="9" style="text-align:center;">No students found</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+</div>
+{% endblock %}

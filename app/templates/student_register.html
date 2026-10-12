@@ -1,0 +1,121 @@
+{% extends "base.html" %}
+
+{% block title %}Student Registration - Placement Portal{% endblock %}
+
+{% block content %}
+<div class="form-container">
+    <div class="form-header">
+        <h1>Student Registration</h1>
+        <p>Verify your email with Google, then complete your placement profile.</p>
+        {% if verified_email %}
+            <div class="email-verification-status verified" role="status">✓ Verified Google email: <strong>{{ verified_email }}</strong></div>
+        {% else %}
+            <div class="email-verification-status pending" role="status">Step 1 of 2 · Verify that you own your email address.</div>
+            <a class="role-button google-verify-button" href="{{ url_for('google_verify_email') }}"><span aria-hidden="true">G</span> Verify email with Google</a>
+        {% endif %}
+    </div>
+
+    <form action="{{ url_for('student_register') }}" method="POST" class="registration-form">
+
+        <!-- Personal Details -->
+        <div class="form-section">
+            <h3>Personal Details</h3>
+            <div class="form-grid">
+                <div class="form-group">
+                    <label for="Student_name">Full Name</label>
+                    <input type="text" id="Student_name" name="Student_name" required placeholder="John Doe">
+                </div>
+                <div class="form-group">
+                    <label for="Student_email">Email Address</label>
+                    <input type="email" id="Student_email" name="Student_email" required placeholder="john@example.com" value="{{ verified_email or '' }}" {% if verified_email %}readonly aria-readonly="true"{% endif %}>
+                    {% if not verified_email %}<small>Verify your email with Google above before submitting the form.</small>{% endif %}
+                </div>
+                <div class="form-group">
+                    <label for="Student_password">Password</label>
+                    <input type="password" id="Student_password" name="Student_password" required>
+                </div>
+                <div class="form-group">
+                    <label for="Student_phone">Phone Number</label>
+                    <input type="text" id="Student_phone" name="Student_phone" required placeholder="+1234567890">
+                </div>
+            </div>
+
+            <div class="form-group full-width">
+                <label for="Student_address">Residential Address</label>
+                <input type="text" id="Student_address" name="Student_address" required placeholder="123 Street, City, State">
+            </div>
+        </div>
+
+        <!-- Academic Information -->
+        <div class="form-section">
+            <h3>Academic Information</h3>
+            <div class="form-grid">
+                <div class="form-group">
+                    <label for="Student_rollno">Roll Number</label>
+                    <input type="text" id="Student_rollno" name="Student_rollno" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="Student_college">College Name</label>
+                    <input type="text" id="Student_college" name="Student_college" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="Student_clg_NIRF">College NIRF Rank</label>
+                    <input type="number" id="Student_clg_NIRF" name="Student_clg_NIRF" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="Student_branch">Branch / Department</label>
+                    <input type="text" id="Student_branch" name="Student_branch" required placeholder="Computer Science">
+                </div>
+
+                <div class="form-group">
+                    <label for="Student_semester">Current Semester</label>
+                    <input type="number" id="Student_semester" name="Student_semester" required min="1" max="8">
+                </div>
+
+                <!-- ✅ NEW: CGPA SCALE -->
+                <div class="form-group">
+                    <label for="Student_CGPA_Scale">CGPA / Percentage Scale</label>
+                    <select id="Student_CGPA_Scale" name="Student_CGPA_Scale" required>
+                        <option value="" disabled selected>Select grading system</option>
+                        <option value="10">CGPA (out of 10)</option>
+                        <option value="4">CGPA (out of 4)</option>
+                        <option value="100">Percentage</option>
+                        <option value="Other">Other</option>
+                    </select>
+                </div>
+
+                <!-- CGPA VALUE -->
+                <div class="form-group">
+                    <label for="Student_CGPA">Current CGPA / Percentage</label>
+                    <input type="number" step="0.01" id="Student_CGPA" name="Student_CGPA"
+                           required placeholder="Eg: 7.5 / 3.2 / 82">
+                </div>
+            </div>
+        </div>
+
+        <!-- Professional Profile -->
+        <div class="form-section">
+            <h3>Professional Profile</h3>
+            <div class="form-group full-width">
+                <label for="Student_skills">Skills (Comma separated)</label>
+                <textarea id="Student_skills" name="Student_skills" rows="3"
+                          placeholder="Python, Flask, SQL, Machine Learning..."></textarea>
+            </div>
+        </div>
+
+        <div class="form-actions">
+            <button type="submit" class="role-button accent-btn" {% if not verified_email %}disabled aria-disabled="true" title="Verify your email with Google first"{% endif %}>
+                Complete Registration
+            </button>
+            <p>
+                Already have an account?
+                <a href="{{ url_for('student_login') }}">Login here</a>
+            </p>
+        </div>
+
+    </form>
+</div>
+{% endblock %}

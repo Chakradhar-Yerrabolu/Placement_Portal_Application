@@ -1,0 +1,72 @@
+{% extends "base.html" %}
+
+{% block title %}Admin Messages{% endblock %}
+
+{% block content %}
+<div class="admin-messages-container">
+
+    <h2>Student Messages</h2>
+
+    <table class="admin-table">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Sender</th>
+                <th>Email</th>
+                <th>Subject</th>
+                <th>Message</th>
+                <th>Status</th>
+                <th>Action</th>
+                <th>Remove</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for msg in messages %}
+            <tr class="{% if msg.is_solved %}solved-row{% endif %}">
+                <td>{{ msg.id }}</td>
+                <td>{{ msg.sender_name }}</td>
+                <td>
+                    <div class="contact-container">
+                                <a href="https://mail.google.com/mail/?view=cm&fs=1&to={{ msg.sender_email }}" 
+                                target="_blank" 
+                                class="email-link">
+                                Email
+                                </a>
+                            </div>
+                </td>
+                <td>{{ msg.subject }}</td>
+                <td>{{ msg.message }}</td>
+                <td>
+                    {% if msg.is_solved %}
+                        <span class="status active">Solved</span>
+                    {% else %}
+                        <span class="status blocked">Pending</span>
+                    {% endif %}
+                </td>
+                <td>
+                    {% if msg.is_solved %}
+                        <a href="{{ url_for('admin_unsolve_message', mid=msg.id) }}"
+                           class="action-btn unblock">Mark Unsolved</a>
+                    {% else %}
+                        <a href="{{ url_for('admin_solve_message', mid=msg.id) }}"
+                           class="action-btn block">Mark Solved</a>
+                    {% endif %}
+                </td>
+        
+                <td>
+                    <a href="{{ url_for('admin_delete_message', mid=msg.id) }}"
+                    class="action-btn delete">Delete</a>
+                </td>
+
+         
+            </tr>
+            {% else %}
+            <tr>
+                <td colspan="7" style="text-align:center;">No messages found</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+</div>
+{% endblock %}

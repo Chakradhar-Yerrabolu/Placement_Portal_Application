@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+{% block title %}Company Login{% endblock %}
+
+{% block content %}
+<div class="form-container">
+
+    <div class="form-header">
+        <h1>Company Login</h1>
+        <p>Login after admin approval</p>
+    </div>
+
+    <form method="POST">
+        <div class="form-group">
+            <label>Email</label>
+            <input type="email" name="email" required>
+        </div>
+
+        <div class="form-group">
+            <label>Password</label>
+            <input type="password" name="password" required>
+        </div>
+
+        <div class="form-actions">
+            <button type="submit" class="role-button accent-btn">Login</button>
+        </div>
+    </form>
+
+</div>
+{% endblock %}

@@ -1,0 +1,43 @@
+{% extends "base.html" %}
+
+{% block title %}Approval Pending{% endblock %}
+
+{% block content %}
+<div class="form-container">
+
+    <div class="form-header">
+        <h1>Approval Pending ⏳</h1>
+        <p>
+            Your company account is currently under review by the
+            placement administration.
+        </p>
+    </div>
+
+    <div class="info-card">
+        <p><strong>Company Name:</strong> {{ company.Company_name }}</p>
+        <p><strong>Registered Email:</strong> {{ company.Company_email }}</p>
+        <p><strong>Status:</strong> Awaiting Admin Approval</p>
+    </div>
+
+    <div style="margin-top: 25px; text-align: center;">
+        <p>
+            Once approved, you will be able to:
+        </p>
+        <ul style="list-style: none; padding: 0;">
+            <li>✔ Create placement drives</li>
+            <li>✔ View student applications</li>
+            <li>✔ Manage recruitment activities</li>
+        </ul>
+    </div>
+
+    <div class="form-actions" style="margin-top: 30px;">
+        <a href="{{ url_for('company_login') }}" class="role-button">
+            🔄 Back to Login
+        </a>
+        <a href="{{ url_for('home') }}" class="role-button accent-btn">
+            🏠 Home
+        </a>
+    </div>
+
+</div>
+{% endblock %}

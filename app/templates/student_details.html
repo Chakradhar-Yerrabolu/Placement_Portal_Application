@@ -1,0 +1,76 @@
+{% extends "base.html" %}
+
+{% block title %}Student Details - {{ User.Student_name }}{% endblock %}
+
+{% block content %}
+<div class="details-container">
+    <div class="profile-card">
+        <div class="profile-header">
+            <div class="avatar-circle">
+                {{ User.Student_name[0] }}
+            </div>
+            <h1>{{ User.Student_name }}</h1>
+            <p class="subtitle">{{ User.Student_branch }} | Semester {{ User.Student_semester }}</p>
+            <span class="status-badge {% if User.Student_blocked %}blocked{% else %}active{% endif %}">
+                {% if User.Student_blocked %}Account Blocked{% else %}Active Member{% endif %}
+            </span>
+        </div>
+
+        <div class="details-grid">
+            <div class="info-group">
+                <h3>Academic Profile</h3>
+                <div class="info-item">
+                    <span class="label">Roll Number:</span>
+                    <span class="value">{{ User.Student_rollno }}</span>
+                </div>
+                <div class="info-item">
+                    <span class="label">College:</span>
+                    <span class="value">{{ User.Student_college }}</span>
+                </div>
+                <div class="info-item">
+                    <span class="label">College NIRF:</span>
+                    <span class="value">#{{ User.Student_clg_NIRF }}</span>
+                </div>
+                <div class="info-item highlight">
+                    <span class="label">Current CGPA:</span>
+                    <span class="value">{{ User.Student_CGPA }}</span>
+                </div>
+            </div>
+
+            <div class="info-group">
+                <h3>Contact Details</h3>
+                <div class="info-item">
+                    <span class="label">Email:</span>
+                    <span class="value">{{ User.Student_email }}</span>
+                </div>
+                <div class="info-item">
+                    <span class="label">Phone:</span>
+                    <span class="value">{{ User.Student_phone }}</span>
+                </div>
+                <div class="info-item">
+                    <span class="label">Address:</span>
+                    <span class="value">{{ User.Student_address }}</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="skills-section">
+            <h3>Skills & Competencies</h3>
+            <div class="skills-container">
+                {% if User.Student_skills %}
+                    {% for skill in User.Student_skills.split(',') %}
+                        <span class="skill-tag">{{ skill.strip() }}</span>
+                    {% endfor %}
+                {% else %}
+                    <p class="no-data">No skills listed.</p>
+                {% endif %}
+            </div>
+        </div>
+
+        <div class="profile-actions">
+            <a href="{{ url_for('student_dashboard') }}" class="back-btn">Back to Dashboard</a>
+            <a href="{{ url_for('student_update_profile') }}" class="edit-btn">Update Profile</a>
+        </div>
+    </div>
+</div>
+{% endblock %}

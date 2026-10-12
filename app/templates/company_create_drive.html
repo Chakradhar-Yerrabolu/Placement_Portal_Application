@@ -1,0 +1,175 @@
+{% extends "base.html" %}
+
+{% block title %}Create Placement Drive - Placement Portal{% endblock %}
+
+{% block content %}
+<div class="form-container">
+
+    <div class="form-header">
+        <h1>Create Placement Drive</h1>
+        <p>
+            Fill in the details below to create a placement drive.
+            The drive will be visible to students only after admin approval.
+        </p>
+    </div>
+
+    <form action="{{ url_for('company_create_drive') }}" method="POST" class="registration-form">
+
+        <!-- ================= Job Details ================= -->
+        <div class="form-section">
+            <h3>Job Details</h3>
+
+            <div class="form-grid">
+                <div class="form-group">
+                    <label for="job_title">Job Title</label>
+                    <input type="text" id="job_title" name="job_title"
+                           required placeholder="Software Engineer">
+                </div>
+
+                
+                <div class="form-group">
+                    <label for="deadline">Application Deadline</label>
+                    <input type="date" id="deadline" name="deadline" required>
+                </div>
+                
+                <div class="form-group full-width">
+                    <label for="job_description">Job Description</label>
+                    <textarea
+                        id="job_description"
+                        name="job_description"
+                        rows="4"
+                        required
+                        placeholder="Brief overview of the role, team, and position"
+                    ></textarea>
+                </div>
+
+
+                <div class="form-group">
+                    <label for="vacancies">Number of Vacancies</label>
+                    <input type="number" id="vacancies" name="vacancies"
+                           min="1" required placeholder="10">
+                </div>
+
+                <div class="form-group">
+                    <label for="salary">Salary / Stipend</label>
+                    <input type="text" id="salary" name="salary"
+                           required placeholder="₹8 LPA / ₹15,000 per month">
+                </div>
+
+                <div class="form-group">
+                    <label for="work_type">Work Type</label>
+                    <select id="work_type" name="work_type" required>
+                        <option value="" disabled selected>Select work type</option>
+                        <option value="Full Time">Full Time</option>
+                        <option value="Part Time">Part Time</option>
+                        <option value="Remote">Remote</option>
+                        <option value="Hybrid">Hybrid</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="job_type">Opportunity Type</label>
+                    <select id="job_type" name="job_type" required>
+                        <option value="" disabled selected>Select type</option>
+                        <option value="Job">Job</option>
+                        <option value="Internship">Internship</option>
+                        <option value="Apprenticeship">Apprenticeship</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="contract_period">Contract Period</label>
+                    <input type="text" id="contract_period" name="contract_period"
+                           required placeholder="6 Months / 1 Year / Permanent">
+                </div>
+            </div>
+        </div>
+
+        <!-- ================= Eligibility Criteria ================= -->
+        <div class="form-section">
+            <h3>Eligibility Criteria</h3>
+
+            <div class="form-grid">
+
+                <div class="form-group">
+                    <label for="cgpa_10">Minimum CGPA (out of 10)</label>
+                    <input type="number" step="0.01" min="0" max="10"
+                           id="cgpa_10" name="cgpa_10"
+                           placeholder="Leave blank for Any">
+                </div>
+
+                <div class="form-group">
+                    <label for="cgpa_4">Minimum CGPA (out of 4)</label>
+                    <input type="number" step="0.01" min="0" max="4"
+                           id="cgpa_4" name="cgpa_4"
+                           placeholder="Leave blank for Any">
+                </div>
+
+                <div class="form-group">
+                    <label for="percentage">Minimum Percentage</label>
+                    <input type="number" step="0.01" min="0" max="100"
+                           id="percentage" name="percentage"
+                           placeholder="Leave blank for Any">
+                </div>
+
+                <div class="form-group">
+                    <label for="branch">Eligible Branch</label>
+                    <input type="text" id="branch" name="branch"
+                           required placeholder="CSE / ECE / IT / All">
+                </div>
+
+                <div class="form-group">
+                    <label for="course">Course of Study</label>
+                    <input type="text" id="course" name="course"
+                           required placeholder="B.Tech / MCA / All">
+                </div>
+
+                <div class="form-group">
+                    <label for="year">Eligible Year</label>
+                    <input type="text" id="year" name="year"
+                           required placeholder="3 / 4 / All">
+                </div>
+
+            </div>
+        </div>
+
+        <!-- ================= Skills Required ================= -->
+        <div class="form-section">
+            <h3>Skills Required</h3>
+
+            <div class="form-group full-width">
+                <label for="skills">Required Skills</label>
+                <textarea id="skills" name="skills" rows="3"
+                          required
+                          placeholder="Python, Flask, SQL, Data Structures"></textarea>
+            </div>
+        </div>
+
+        <!-- ================= Role & Responsibilities ================= -->
+        <div class="form-section">
+            <h3>Role & Responsibilities</h3>
+
+            <div class="form-group full-width">
+                <label for="responsibilities">What the employee is expected to do</label>
+                <textarea id="responsibilities" name="responsibilities"
+                          rows="4" required
+                          placeholder="Day-to-day responsibilities, learning outcomes, expectations"></textarea>
+            </div>
+        </div>
+
+        <!-- ================= Actions ================= -->
+        <div class="form-actions">
+            <button type="submit" class="role-button accent-btn">
+                Submit Drive for Approval
+            </button>
+            <p>
+                <a href="{{ url_for('company_dashboard') }}">
+                    ← Back to Dashboard
+                </a>
+            </p>
+        </div>
+
+    </form>
+
+</div>
+{% endblock %}

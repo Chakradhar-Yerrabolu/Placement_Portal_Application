@@ -1,0 +1,69 @@
+{% extends "base.html" %}
+
+{% block title %}Update Profile - Placement Portal{% endblock %}
+
+{% block content %}
+<div class="update-profile-container">
+    <div class="form-card wide-card">
+        <div class="form-header">
+            <h1>Update Your Profile</h1>
+            <p>Modify your details below to keep your placement profile current.</p>
+        </div>
+
+        <form action="{{ url_for('student_update_profile') }}" method="POST" class="styled-form">
+            
+            <div class="form-section">
+                <h3 class="section-title">Personal Information</h3>
+                
+                <div class="form-group">
+                    <label for="Student_name">Full Name</label>
+                    <input type="text" id="Student_name" name="Student_name" value="{{ User.Student_name }}" placeholder="Enter your full name" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="Student_phone">Phone Number</label>
+                    <input type="text" id="Student_phone" name="Student_phone" value="{{ User.Student_phone }}" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="Student_address">Address</label>
+                    <input type="text" id="Student_address" name="Student_address" value="{{ User.Student_address }}" required>
+                </div>
+
+               
+            </div>
+
+            <div class="form-section">
+                <h3 class="section-title">Academic Details</h3>
+                <div class="form-grid-wide">
+                    <div class="form-group">
+                        <label for="Student_branch">Branch</label>
+                        <input type="text" id="Student_branch" name="Student_branch" value="{{ User.Student_branch }}" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="Student_semester">Semester</label>
+                        <input type="number" id="Student_semester" name="Student_semester" value="{{ User.Student_semester }}" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="Student_CGPA">Current CGPA</label>
+                        <input type="number" step="0.01" id="Student_CGPA" name="Student_CGPA" value="{{ User.Student_CGPA }}" required>
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-section">
+                <h3 class="section-title">Skills & Expertise</h3>
+                <div class="form-group">
+                    <label for="Student_skills">Skills (Comma separated)</label>
+                    <textarea id="Student_skills" name="Student_skills" rows="4" placeholder="e.g. Python, SQL, Project Management">{{ User.Student_skills }}</textarea>
+                </div>
+            </div>
+
+            <div class="form-actions-wide">
+                <button type="submit" class="save-btn">Save Changes</button>
+                <a href="{{ url_for('student_dashboard') }}" class="cancel-btn">Cancel</a>
+            </div>
+        </form>
+    </div>
+</div>
+{% endblock %}
